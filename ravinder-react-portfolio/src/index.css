@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sora: 'Sora', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+}
+
+@config "../tailwind.config.js";
+
+body {
+  @apply bg-site text-white bg-cover bg-no-repeat font-sora relative;
+  overflow-x: hidden;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #131424;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #F13024;
+  /* matching accent */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d12015;
+}
