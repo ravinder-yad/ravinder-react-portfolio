@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaBootstrap, FaGithub, FaNpm } from 'react-icons/fa';
@@ -8,7 +8,14 @@ import { HiFire } from 'react-icons/hi2';
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
 
-const aboutData = [
+// Icon Mapping
+const iconMap = {
+    FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaBootstrap, FaGithub, FaNpm,
+    SiMongodb, SiExpress, SiPostman, VscCode, HiFire
+};
+
+// Initial Data
+const initialAboutData = [
     {
         title: 'skills',
         heading: 'Skills & Technologies',
@@ -83,7 +90,40 @@ const aboutData = [
 
 const About = () => {
     const [index, setIndex] = useState(0);
+    const [aboutData, setAboutData] = useState(initialAboutData);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/api/about");
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result && result.sections && Array.isArray(result.sections)) {
+                        // Transform the fetched data to map icon strings to components
+                        const transformedData = result.sections.map(section => ({
+                            ...section,
+                            info: section.info.map(item => ({
+                                ...item,
+                                icons: item.icons ? item.icons.map(iconObj => ({
+                                    ...iconObj,
+                                    Icon: iconMap[iconObj.icon] || FaHtml5 // Fallback to HTML5 icon if not found
+                                })) : undefined
+                            }))
+                        }));
+                        setAboutData(transformedData);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch about data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // Helper to safely get the current section
+    const currentSection = aboutData[index] || aboutData[0];
 
     return (
         <div className="h-full min-h-screen bg-primary/30 text-center xl:text-left relative overflow-y-auto overflow-x-hidden pt-8 md:pt-16 xl:pt-20 pb-40 xl:pb-32">
@@ -173,17 +213,17 @@ const About = () => {
                     <div className="py-8 xl:py-10 flex flex-col gap-y-6 bg-gradient-to-br from-white/10 to-transparent p-8 rounded-[32px] border border-white/10 backdrop-blur-2xl min-h-[450px] shadow-2xl relative">
                         <div className="mb-8 border-l-4 border-accent pl-6">
                             <h3 className="text-3xl font-extrabold text-white mb-2">
-                                {aboutData[index].heading}
+                                {currentSection.heading}
                             </h3>
-                            {aboutData[index].subheading && (
+                            {currentSection.subheading && (
                                 <p className="text-white/50 text-base italic">
-                                    {aboutData[index].subheading}
+                                    {currentSection.subheading}
                                 </p>
                             )}
                         </div>
 
                         <div className="flex flex-col gap-y-8 h-[300px] overflow-y-auto pr-4">
-                            {aboutData[index].info.map((item, itemIndex) => (
+                            {currentSection.info.map((item, itemIndex) => (
                                 <div key={itemIndex}>
                                     <div className="flex justify-between items-center mb-3">
                                         <div className="font-bold text-xl text-white">{item.title}</div>
@@ -205,7 +245,7 @@ const About = () => {
                                             {item.icons.map((iconData, iconIndex) => (
                                                 <div key={iconIndex} className="group relative">
                                                     <div className="text-4xl text-white/80 hover:text-accent hover:scale-125 transition-all duration-500 cursor-pointer">
-                                                        <iconData.Icon />
+                                                        {iconData.Icon && <iconData.Icon />}
                                                     </div>
                                                     <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition bg-accent text-white text-xs font-bold px-3 py-1 rounded-lg whitespace-nowrap">
                                                         {iconData.name}

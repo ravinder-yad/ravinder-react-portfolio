@@ -1,9 +1,11 @@
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { HiAcademicCap, HiMagnifyingGlassCircle } from 'react-icons/hi2';
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
 
-const certificatesData = [
+// Initial Static Data
+const initialCertificatesData = [
     {
         title: 'Git/Github - Lessons and Projects',
         issuer: 'CodeChef',
@@ -21,6 +23,26 @@ const certificatesData = [
 ];
 
 const Certificates = () => {
+    const [certificatesData, setCertificatesData] = useState(initialCertificatesData);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/api/certificates");
+                if (response.ok) {
+                    const result = await response.json();
+                    if (Array.isArray(result) && result.length > 0) {
+                        setCertificatesData(result);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch certificates:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div className="h-full min-h-screen bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
 
@@ -45,9 +67,9 @@ const Certificates = () => {
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl xl:text-6xl font-extrabold mb-4"
+                        className="text-3xl md:text-5xl xl:text-6xl font-extrabold mb-4"
                     >
-                        My <span className="text-accent underline decoration-white/10 underline-offset-8 text-6xl">Certifications.</span>
+                        My <span className="text-accent underline decoration-white/10 underline-offset-8">Certifications.</span>
                     </motion.h2>
                     <p className="text-white/50 text-lg font-light max-w-[600px] mx-auto">
                         Verified skills from CodeChef and other platforms.

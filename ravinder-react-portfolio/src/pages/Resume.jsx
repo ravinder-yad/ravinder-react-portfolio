@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
     HiArrowDownTray,
@@ -13,12 +13,16 @@ import {
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
 
-const resumeData = {
+// Initial Static Data
+const initialResumeData = {
     profile: {
         name: 'Ravinder Kumar',
         title: 'Full Stack Web Developer',
         about:
             'I am a motivated Full Stack Web Developer with a strong foundation in modern web technologies. I enjoy building clean, responsive, and scalable web applications while continuously improving my skills. I have hands-on experience with both frontend and backend development and am eager to learn, grow, and contribute to real-world projects in a collaborative environment.',
+        email: 'ravinderyadav092007@gmail.com',
+        phone: '+91 8949477114',
+        location: 'Mundawar Alwar Rajasthan',
     },
     experience: [
         {
@@ -83,6 +87,39 @@ const resumeData = {
 };
 
 const Resume = () => {
+    const [resumeData, setResumeData] = useState(initialResumeData);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/api/resume");
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result) {
+                        setResumeData(result);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch resume data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // Helper to safely render varied data types (strings vs objects)
+    const renderSkill = (skill) => (typeof skill === 'string' ? skill : skill.name);
+    const renderCert = (cert) => (typeof cert === 'string' ? cert : cert.name || cert);
+
+    // Fallbacks to prevent crashes if nested data is missing
+    const profile = resumeData.profile || initialResumeData.profile;
+    const experience = resumeData.experience || [];
+    const education = resumeData.education || [];
+    const skills = resumeData.skills || initialResumeData.skills;
+    const certifications = resumeData.certifications || initialResumeData.certifications;
+    const others = resumeData.others || initialResumeData.others;
+
+
     return (
         <div className="h-full min-h-screen bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
 
@@ -111,9 +148,9 @@ const Resume = () => {
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl xl:text-6xl font-extrabold mb-2"
+                        className="text-3xl md:text-5xl xl:text-6xl font-extrabold mb-2"
                     >
-                        {resumeData.profile.name}
+                        {profile.name}
                     </motion.h2>
 
                     <motion.p
@@ -122,7 +159,7 @@ const Resume = () => {
                         transition={{ delay: 0.1 }}
                         className="text-accent text-xl xl:text-2xl font-bold tracking-[4px] uppercase mb-8"
                     >
-                        {resumeData.profile.title}
+                        {profile.title}
                     </motion.p>
 
                     <motion.div
@@ -132,19 +169,19 @@ const Resume = () => {
                         className="flex flex-wrap justify-center gap-6 mb-10"
                     >
                         <div className="flex items-center gap-x-2 text-white/60">
-                            <HiEnvelope className="text-accent" /> ravinderyadav092007@gmail.com
+                            <HiEnvelope className="text-accent" /> {profile.email}
                         </div>
                         <div className="flex items-center gap-x-2 text-white/60">
-                            <HiPhone className="text-accent" /> +91 8949477114
+                            <HiPhone className="text-accent" /> {profile.phone}
                         </div>
                         <div className="flex items-center gap-x-2 text-white/60">
-                            <HiMapPin className="text-accent" /> Mundawar Alwar Rajasthan
+                            <HiMapPin className="text-accent" /> {profile.location}
                         </div>
                     </motion.div>
 
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
                         <a
-                            href="/resume.png"
+                            href={profile.resumeFile || "/resume.png"}
                             download="Ravinder_Kumar_Resume.png"
                             className="btn rounded-full bg-accent border border-accent hover:bg-transparent hover:text-accent font-bold uppercase tracking-[2px] py-3.5 px-10 transition-all duration-500 shadow-xl shadow-accent/10 flex items-center gap-x-3 group"
                         >
@@ -171,7 +208,7 @@ const Resume = () => {
                                 Professional Summary
                             </h3>
                             <p className="text-white/70 leading-relaxed text-lg font-light italic">
-                                “{resumeData.profile.about}”
+                                “{profile.about}”
                             </p>
                         </motion.section>
 
@@ -183,7 +220,7 @@ const Resume = () => {
                             </h3>
 
                             <div className="space-y-6">
-                                {resumeData.experience.map((item, idx) => (
+                                {experience.map((item, idx) => (
                                     <motion.div
                                         key={idx}
                                         initial={{ opacity: 0, y: 20 }}
@@ -203,7 +240,7 @@ const Resume = () => {
                                         </div>
 
                                         <ul className="space-y-3">
-                                            {item.points.map((point, pIdx) => (
+                                            {item.points && item.points.map((point, pIdx) => (
                                                 <li
                                                     key={pIdx}
                                                     className="flex items-start gap-x-3 text-white/60 text-sm leading-relaxed"
@@ -225,7 +262,7 @@ const Resume = () => {
                                 Education
                             </h3>
 
-                            {resumeData.education.map((item, idx) => (
+                            {education.map((item, idx) => (
                                 <motion.div
                                     key={idx}
                                     initial={{ opacity: 0, x: -20 }}
@@ -265,12 +302,12 @@ const Resume = () => {
                                             <HiCommandLine /> {section}
                                         </p>
                                         <div className="flex flex-wrap gap-2">
-                                            {resumeData.skills[section].map((s, i) => (
+                                            {skills[section] && skills[section].map((s, i) => (
                                                 <span
                                                     key={i}
                                                     className="bg-white/10 text-white text-[11px] px-3 py-1.5 rounded-lg border border-white/5"
                                                 >
-                                                    {s}
+                                                    {renderSkill(s)}
                                                 </span>
                                             ))}
                                         </div>
@@ -285,10 +322,10 @@ const Resume = () => {
                                 Certifications
                             </h3>
                             <ul className="space-y-4">
-                                {resumeData.certifications.map((c, i) => (
+                                {certifications.map((c, i) => (
                                     <li key={i} className="flex items-center gap-x-3 text-white/60 text-sm">
                                         <HiShieldCheck className="text-accent text-lg shrink-0" />
-                                        {c}
+                                        {renderCert(c)}
                                     </li>
                                 ))}
                             </ul>
@@ -301,7 +338,7 @@ const Resume = () => {
                                     Core Strengths
                                 </h3>
                                 <div className="flex flex-wrap gap-2">
-                                    {resumeData.others.strengths.map((s, i) => (
+                                    {others.strengths && others.strengths.map((s, i) => (
                                         <span
                                             key={i}
                                             className="text-xs text-white/40 border border-white/10 px-3 py-1 rounded-full"
@@ -317,7 +354,7 @@ const Resume = () => {
                                     Languages
                                 </h3>
                                 <div className="space-y-2">
-                                    {resumeData.others.languages.map((l, i) => (
+                                    {others.languages && others.languages.map((l, i) => (
                                         <p key={i} className="text-white/60 text-sm font-medium">
                                             {l}
                                         </p>

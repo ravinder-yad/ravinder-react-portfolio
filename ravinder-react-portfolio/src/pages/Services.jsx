@@ -1,32 +1,62 @@
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { HiComputerDesktop, HiCodeBracketSquare, HiDevicePhoneMobile, HiServer } from "react-icons/hi2";
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
 
-const serviceData = [
+// Icon Map
+const iconMap = {
+    HiComputerDesktop,
+    HiCodeBracketSquare,
+    HiDevicePhoneMobile,
+    HiServer
+};
+
+// Initial Data
+const initialServiceData = [
     {
-        icon: <HiComputerDesktop />,
+        icon: "HiComputerDesktop",
         title: 'Frontend Development',
         description: 'I build modern, responsive, and user-friendly interfaces using HTML, CSS, JavaScript, and React, with a strong focus on performance and user experience.',
     },
     {
-        icon: <HiServer />,
+        icon: "HiServer",
         title: 'Backend Development',
         description: 'I develop secure and scalable backend systems using Node.js, Express, and MongoDB, creating reliable APIs and efficient data handling.',
     },
     {
-        icon: <HiCodeBracketSquare />,
+        icon: "HiCodeBracketSquare",
         title: 'Full Stack Web Development',
         description: 'I build complete web applications by managing both frontend and backend development, from database design to user interface implementation.',
     },
     {
-        icon: <HiDevicePhoneMobile />,
+        icon: "HiDevicePhoneMobile",
         title: 'Responsive Web Design',
         description: 'I design and optimize websites to work seamlessly across all devices, including mobile, tablet, and desktop screens.',
     },
 ];
 
 const Services = () => {
+    const [serviceData, setServiceData] = useState(initialServiceData);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/api/services");
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result && result.services && Array.isArray(result.services)) {
+                        setServiceData(result.services);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch services data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div className="h-full bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
 
@@ -46,7 +76,7 @@ const Services = () => {
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1 }}
-                            className="text-4xl xl:text-5xl leading-tight font-bold mb-4"
+                            className="text-3xl md:text-4xl xl:text-5xl leading-tight font-bold mb-4"
                         >
                             My Services <span className="text-accent">.</span>
                         </motion.h2>
@@ -64,6 +94,8 @@ const Services = () => {
                     <div className="w-full lg:max-w-[90%] xl:max-w-[65%]">
                         <div className="grid md:grid-cols-2 gap-6">
                             {serviceData.map((item, index) => {
+                                const IconComponent = iconMap[item.icon] || HiComputerDesktop;
+
                                 return (
                                     <motion.div
                                         initial={{ opacity: 0, y: 20 }}
@@ -74,7 +106,7 @@ const Services = () => {
                                     >
                                         <div className="flex justify-between items-start mb-4 relative z-10">
                                             <div className="text-4xl text-accent transition-all duration-300 group-hover:scale-110 group-hover:text-white">
-                                                {item.icon}
+                                                <IconComponent />
                                             </div>
                                             <div className="text-2xl text-white/50 group-hover:text-white group-hover:-rotate-45 transition-all duration-300">
                                                 →

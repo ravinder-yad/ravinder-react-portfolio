@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaBootstrap, FaGithub, FaNpm } from 'react-icons/fa';
 import { SiTailwindcss, SiMongodb, SiExpress, SiPostman } from 'react-icons/si';
@@ -7,42 +7,69 @@ import { HiFire } from 'react-icons/hi2';
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
 
-const skillsData = [
+// Icon Mapping
+const iconMap = {
+    FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaBootstrap, FaGithub, FaNpm,
+    SiTailwindcss, SiMongodb, SiExpress, SiPostman, VscCode, HiFire
+};
+
+// Initial Data
+const initialSkillsData = [
     {
         title: 'Frontend Development',
         desc: 'I build clean, responsive, and interactive user interfaces with a strong focus on usability, performance, and user experience.',
         skills: [
-            { Icon: FaHtml5, name: 'HTML5', color: '#e34f26' },
-            { Icon: FaCss3, name: 'CSS3', color: '#1572b6' },
-            { Icon: FaBootstrap, name: 'Bootstrap', color: '#7952b3' },
-            { Icon: FaJs, name: 'JavaScript', color: '#f7df1e' },
-            { Icon: FaReact, name: 'React.js', color: '#61dafb' },
-            { Icon: SiTailwindcss, name: 'Tailwind CSS', color: '#06b6d4' },
+            { icon: "FaHtml5", name: 'HTML5', color: '#e34f26' },
+            { icon: "FaCss3", name: 'CSS3', color: '#1572b6' },
+            { icon: "FaBootstrap", name: 'Bootstrap', color: '#7952b3' },
+            { icon: "FaJs", name: 'JavaScript', color: '#f7df1e' },
+            { icon: "FaReact", name: 'React.js', color: '#61dafb' },
+            { icon: "SiTailwindcss", name: 'Tailwind CSS', color: '#06b6d4' },
         ]
     },
     {
         title: 'Backend Development',
         desc: 'I develop secure and scalable backend systems that efficiently handle data, APIs, and server-side logic.',
         skills: [
-            { Icon: FaNodeJs, name: 'Node.js', color: '#339933' },
-            { Icon: SiExpress, name: 'Express.js', color: '#ffffff' },
-            { Icon: SiMongodb, name: 'MongoDB', color: '#47a248' },
-            { Icon: HiFire, name: 'REST APIs', color: '#f13024' },
+            { icon: "FaNodeJs", name: 'Node.js', color: '#339933' },
+            { icon: "SiExpress", name: 'Express.js', color: '#ffffff' },
+            { icon: "SiMongodb", name: 'MongoDB', color: '#47a248' },
+            { icon: "HiFire", name: 'REST APIs', color: '#f13024' },
         ]
     },
     {
         title: 'Tools & Technologies',
         desc: 'I work with modern development tools to improve productivity, debug applications, and maintain clean, efficient codebases.',
         skills: [
-            { Icon: FaGithub, name: 'Git & GitHub', color: '#ffffff' },
-            { Icon: SiPostman, name: 'Postman', color: '#ff6c37' },
-            { Icon: VscCode, name: 'VS Code', color: '#007acc' },
-            { Icon: FaNpm, name: 'npm', color: '#cb3837' },
+            { icon: "FaGithub", name: 'Git & GitHub', color: '#ffffff' },
+            { icon: "SiPostman", name: 'Postman', color: '#ff6c37' },
+            { icon: "VscCode", name: 'VS Code', color: '#007acc' },
+            { icon: "FaNpm", name: 'npm', color: '#cb3837' },
         ]
     }
 ];
 
 const Skills = () => {
+    const [skillsData, setSkillsData] = useState(initialSkillsData);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/api/skills");
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result && result.categories && Array.isArray(result.categories)) {
+                        setSkillsData(result.categories);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch skills data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div className="h-full min-h-screen bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
 
@@ -62,7 +89,7 @@ const Skills = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-4xl xl:text-6xl font-extrabold mb-4"
+                        className="text-3xl md:text-5xl xl:text-6xl font-extrabold mb-4"
                     >
                         My Skills & <span className="text-accent underline decoration-white/10 underline-offset-8">Technologies.</span>
                     </motion.h2>
@@ -94,19 +121,22 @@ const Skills = () => {
                             </p>
 
                             <div className="grid grid-cols-3 gap-6 w-full">
-                                {category.skills.map((skill, sIdx) => (
-                                    <div key={sIdx} className="flex flex-col items-center gap-y-2 group/skill">
-                                        <div
-                                            className="text-4xl transition-all duration-300 group-hover/skill:scale-125 group-hover/skill:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
-                                            style={{ color: skill.color }}
-                                        >
-                                            <skill.Icon />
+                                {category.skills.map((skill, sIdx) => {
+                                    const IconComponent = iconMap[skill.icon] || FaHtml5;
+                                    return (
+                                        <div key={sIdx} className="flex flex-col items-center gap-y-2 group/skill">
+                                            <div
+                                                className="text-4xl transition-all duration-300 group-hover/skill:scale-125 group-hover/skill:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                                                style={{ color: skill.color }}
+                                            >
+                                                <IconComponent />
+                                            </div>
+                                            <span className="text-[10px] text-white/40 uppercase tracking-[1px] font-bold group-hover/skill:text-white transition-all text-center">
+                                                {skill.name}
+                                            </span>
                                         </div>
-                                        <span className="text-[10px] text-white/40 uppercase tracking-[1px] font-bold group-hover/skill:text-white transition-all text-center">
-                                            {skill.name}
-                                        </span>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </motion.div>
                     ))}

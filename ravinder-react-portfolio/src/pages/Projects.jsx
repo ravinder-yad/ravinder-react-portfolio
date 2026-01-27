@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BsArrowRight } from 'react-icons/bs';
 import { HiExternalLink } from 'react-icons/hi';
@@ -6,7 +6,8 @@ import { FaGithub } from 'react-icons/fa';
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
 
-const projectData = [
+// Initial Static Data
+const initialProjectData = [
     {
         title: 'TIPS-G Alwar',
         description: 'Developed a responsive educational institute website for TIPS-G Alwar. The website includes structured pages for institute information, courses, and user-friendly navigation. Focused on clean UI design, responsiveness, and performance optimization.',
@@ -64,6 +65,26 @@ const projectData = [
 ];
 
 const Projects = () => {
+    const [projectData, setProjectData] = useState(initialProjectData);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/api/projects");
+                if (response.ok) {
+                    const result = await response.json();
+                    if (Array.isArray(result) && result.length > 0) {
+                        setProjectData(result);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch projects data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div className="h-full min-h-screen bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
 
@@ -92,7 +113,7 @@ const Projects = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-4xl xl:text-6xl font-extrabold mb-4"
+                        className="text-3xl md:text-5xl xl:text-6xl font-extrabold mb-4"
                     >
                         My <span className="text-accent underline decoration-white/10 underline-offset-8">Projects.</span>
                     </motion.h2>

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import ParticlesContainer from '../components/ParticlesContainer';
 import Header from '../components/Header';
 import { motion } from 'framer-motion';
@@ -7,6 +8,76 @@ import Circles from '../components/Circles';
 
 const Home = () => {
     const navigate = useNavigate();
+
+    // Default static data (fallback)
+    const [homeData, setHomeData] = useState({
+        hero: {
+            greeting: "Hi, I’m",
+            name: "Ravinder Kumar",
+            subtitlePrefix: "I’m a",
+            roles: [
+                "Full Stack Web Developer",
+                "MERN Stack Developer",
+                "React.js Specialist",
+                "Creative Problem Solver"  
+            ],
+            description: "I transform complex ideas into clean, scalable, and user-friendly digital experiences using modern technologies. My focus is on building high-performance web applications using modern technologies, with strong attention to detail and a passion for continuous learning."
+        },
+        buttons: {
+            primary: {
+                text: "View My Projects",
+                route: "/projects"
+            },
+            secondary: {
+                text: "Get in Touch",
+                route: "/contact"
+            }
+        },
+        image: {
+            src: "/avatar.pn",
+            alt: "Ravinder Kumar – Full Stack Web Developer"
+        }
+    });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/api/home");
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result && result.hero) {
+                        setHomeData(prevData => ({
+                            ...prevData,
+                            ...result,
+                            hero: { ...prevData.hero, ...result.hero },
+                            buttons: result.buttons ? { ...prevData.buttons, ...result.buttons } : prevData.buttons,
+                            image: result.image ? { ...prevData.image, ...result.image } : prevData.image
+                        }));
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch home data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // Construct sequence for TypeAnimation dynamically with stable reference
+    const typeSequence = React.useMemo(() => {
+        const sequence = [];
+        if (homeData?.hero?.roles && Array.isArray(homeData.hero.roles) && homeData.hero.roles.length > 0) {
+            homeData.hero.roles.forEach(role => {
+                sequence.push(role);
+                sequence.push(2000);
+            });
+        } else {
+            // Fallback sequence to prevent crash if empty
+            sequence.push('Developer');
+            sequence.push(2000);
+        }
+        return sequence;
+    }, [homeData?.hero?.roles]);
 
     return (
         <div className="bg-primary/20 h-full relative overflow-hidden">
@@ -37,11 +108,11 @@ const Home = () => {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8 }}
-                                className="text-4xl md:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight"
+                                className="text-3xl sm:text-4xl md:text-6xl xl:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight"
                             >
-                                Hi, I’m <br />
+                                {homeData.hero.greeting} <br />
                                 <span className="text-accent underline decoration-white/5 underline-offset-8">
-                                    Ravinder Kumar
+                                    {homeData.hero.name}
                                 </span>
                             </motion.h1>
 
@@ -52,18 +123,10 @@ const Home = () => {
                                 transition={{ delay: 0.2, duration: 0.8 }}
                                 className="text-xl md:text-3xl font-medium mb-8 text-white/80"
                             >
-                                <span className="mr-3 italic font-light opacity-60">I’m a</span>
+                                <span className="mr-3 italic font-light opacity-60">{homeData.hero.subtitlePrefix}</span>
                                 <TypeAnimation
-                                    sequence={[
-                                        'Full Stack Web Developer',
-                                        2000,
-                                        'MERN Stack Developer',
-                                        2000,
-                                        'React.js Specialist',
-                                        2000,
-                                        'Creative Problem Solver',
-                                        2000,
-                                    ]}
+                                    key={(typeSequence && typeSequence.length > 0) ? typeSequence.join(',') : 'default-anim'} // Re-render if roles change
+                                    sequence={typeSequence}
                                     wrapper="span"
                                     speed={50}
                                     className="text-white font-bold border-b-2 border-accent/40"
@@ -78,9 +141,7 @@ const Home = () => {
                                 transition={{ delay: 0.4, duration: 0.8 }}
                                 className="max-w-xl mx-auto xl:mx-0 mb-10 text-white/60 text-lg leading-relaxed font-light"
                             >
-                                I transform complex ideas into clean, scalable, and user-friendly digital experiences.
-                                My focus is on building high-performance web applications using modern technologies,
-                                with strong attention to detail and a passion for continuous learning.
+                                {homeData.hero.description}
                             </motion.p>
 
                             {/* Buttons */}
@@ -91,17 +152,17 @@ const Home = () => {
                                 className="flex flex-col sm:flex-row items-center gap-6 justify-center xl:justify-start"
                             >
                                 <button
-                                    onClick={() => navigate('/projects')}
+                                    onClick={() => navigate(homeData?.buttons?.primary?.route || '/projects')}
                                     className="btn bg-accent border border-accent rounded-full py-4 px-10 text-sm font-extrabold uppercase tracking-[3px] hover:bg-transparent transition-all shadow-2xl shadow-accent/20"
                                 >
-                                    View My Projects
+                                    {homeData?.buttons?.primary?.text || 'View My Projects'}
                                 </button>
 
                                 <button
-                                    onClick={() => navigate('/contact')}
+                                    onClick={() => navigate(homeData?.buttons?.secondary?.route || '/contact')}
                                     className="text-white border-b border-white hover:text-accent hover:border-accent transition-all pb-1 font-bold tracking-[2px] text-xs uppercase"
                                 >
-                                    Get in Touch
+                                    {homeData?.buttons?.secondary?.text || 'Get in Touch'}
                                 </button>
                             </motion.div>
                         </div>
@@ -121,8 +182,8 @@ const Home = () => {
 
                                 <div className="relative bg-black/40 border border-white/10 p-2 rounded-full overflow-hidden w-[500px] h-[500px] flex items-center justify-center backdrop-blur-xl">
                                     <img
-                                        src="/avatar.png"
-                                        alt="Ravinder Kumar – Full Stack Web Developer"
+                                        src={homeData?.image?.src || '/avatar.png'}
+                                        alt={homeData?.image?.alt || 'Profile'}
                                         className="w-full h-full object-cover scale-110 translate-y-8 grayscale hover:grayscale-0 transition-all duration-700"
                                     />
                                 </div>

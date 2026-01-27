@@ -3,7 +3,7 @@ import { FaGithub, FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
 
 const Header = () => {
     return (
-        <header className="absolute z-30 w-full flex items-center px-16 xl:px-0 xl:h-[90px] pt-4 md:pt-0">
+        <header className="absolute z-30 w-full flex items-center px-4 md:px-12 xl:px-0 xl:h-[90px] pt-4 md:pt-0">
             <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8">
 
                 {/* Logo */}
