@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+
 import { HiAcademicCap, HiMagnifyingGlassCircle } from 'react-icons/hi2';
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
