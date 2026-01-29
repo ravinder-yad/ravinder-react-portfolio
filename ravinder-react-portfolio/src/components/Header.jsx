@@ -7,7 +7,8 @@ const Header = () => {
             <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8">
 
                 {/* Logo */}
-                <Link to="/">
+                <Link to="/" className="flex items-center gap-x-2">
+                    <img src="/r-logo.svg" alt="logo" className="w-10 h-10 rounded-full" />
                     <h1 className="text-3xl font-bold">
                         ravinder<span className="text-accent">.kumar</span>
                     </h1>

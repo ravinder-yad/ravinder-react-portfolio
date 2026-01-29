@@ -19,7 +19,7 @@ const Home = () => {
                 "Full Stack Web Developer",
                 "MERN Stack Developer",
                 "React.js Specialist",
-                "Creative Problem Solver"  
+                "Creative Problem Solver"
             ],
             description: "I transform complex ideas into clean, scalable, and user-friendly digital experiences using modern technologies. My focus is on building high-performance web applications using modern technologies, with strong attention to detail and a passion for continuous learning."
         },
@@ -34,7 +34,7 @@ const Home = () => {
             }
         },
         image: {
-            src: "/avatar.pn",
+            src: "/avatar.png",
             alt: "Ravinder Kumar – Full Stack Web Developer"
         }
     });
