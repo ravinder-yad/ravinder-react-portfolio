@@ -2,7 +2,7 @@ const express = require("express");
 const {
     sendContact,
     getContacts,
-} = require("../controllers/contactController");
+} = require("../controllers/contactcontrollers");
 
 const router = express.Router();
 

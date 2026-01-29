@@ -1,4 +1,3 @@
-// Node 24 has native fetch
 
 const myHeaders = {
     "Content-Type": "application/json"
@@ -7,18 +6,45 @@ const myHeaders = {
 const raw = JSON.stringify({
     "projects": [
         {
-            "title": "TIPS-G Alwar",
-            "description": "Developed a responsive educational institute website with clean UI and performance optimization.",
+            "title": "Mokshika Water Purifier",
+            "description": "Business website highlighting services, products, and contact details.",
             "tech": [
                 "HTML",
                 "CSS",
                 "JavaScript",
                 "React"
             ],
-            "link": "https://tips-g-alwar-frontend-n3wn.vercel.app/",
+            "link": "https://mokshika-water-purify-d946.vercel.app/",
             "github": "#",
-            "image": "https://picsum.photos/seed/education/800/600",
-            "category": "Education"
+            "image": "https://picsum.photos/seed/water/800/600",
+            "category": "Business"
+        },
+        {
+            "title": "Rapido App (UI Clone)",
+            "description": "Frontend UI clone focusing on layout, styling, and responsiveness.",
+            "tech": [
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "React"
+            ],
+            "link": "https://rapido-app-ten.vercel.app/",
+            "github": "#",
+            "image": "https://picsum.photos/seed/rapido/800/600",
+            "category": "Logistics"
+        },
+        {
+            "title": "Electricity Billing Website",
+            "description": "Simple billing interface with clean design and usability.",
+            "tech": [
+                "HTML",
+                "CSS",
+                "JavaScript"
+            ],
+            "link": "https://electricity-phi.vercel.app/",
+            "github": "#",
+            "image": "https://picsum.photos/seed/electricity/800/600",
+            "category": "Services"
         },
         {
             "title": "My Music",
@@ -49,45 +75,18 @@ const raw = JSON.stringify({
             "category": "Entertainment"
         },
         {
-            "title": "Rapido App (UI Clone)",
-            "description": "Frontend UI clone focusing on layout, styling, and responsiveness.",
+            "title": "TIPS-G Alwar",
+            "description": "Developed a responsive educational institute website with clean UI and performance optimization.",
             "tech": [
                 "HTML",
                 "CSS",
                 "JavaScript",
                 "React"
             ],
-            "link": "https://rapido-app-ten.vercel.app/",
+            "link": "https://tips-g-alwar-frontend-n3wn.vercel.app/",
             "github": "#",
-            "image": "https://picsum.photos/seed/rapido/800/600",
-            "category": "Logistics"
-        },
-        {
-            "title": "Electricity Billing Website",
-            "description": "Simple billing interface with clean design and usability.",
-            "tech": [
-                "HTML",
-                "CSS",
-                "JavaScript"
-            ],
-            "link": "https://electricity-phi.vercel.app/",
-            "github": "#",
-            "image": "https://picsum.photos/seed/electricity/800/600",
-            "category": "Services"
-        },
-        {
-            "title": "Mokshika Water Purifier",
-            "description": "Business website highlighting services, products, and contact details.",
-            "tech": [
-                "HTML",
-                "CSS",
-                "JavaScript",
-                "React"
-            ],
-            "link": "https://mokshika-water-purify-d946.vercel.app/",
-            "github": "#",
-            "image": "https://picsum.photos/seed/water/800/600",
-            "category": "Business"
+            "image": "https://picsum.photos/seed/education/800/600",
+            "category": "Education"
         }
     ]
 });
@@ -99,8 +98,6 @@ const requestOptions = {
     redirect: "follow"
 };
 
-// Use built-in fetch if available (Node 18+), otherwise try require
-// Since user is on Node 24, fetch is global.
 fetch("http://localhost:5000/api/projects", requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))

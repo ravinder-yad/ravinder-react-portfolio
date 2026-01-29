@@ -7,37 +7,13 @@ import ParticlesContainer from '../components/ParticlesContainer';
 // Icon Map
 const iconMap = {
     HiComputerDesktop,
-    HiCodeBracketSquare,
+    HiCodeBracketSquare, 
     HiDevicePhoneMobile,
     HiServer
 };
 
-// Initial Data
-const initialServiceData = [
-    {
-        icon: "HiComputerDesktop",
-        title: 'Frontend Development',
-        description: 'I build modern, responsive, and user-friendly interfaces using HTML, CSS, JavaScript, and React, with a strong focus on performance and user experience.',
-    },
-    {
-        icon: "HiServer",
-        title: 'Backend Development',
-        description: 'I develop secure and scalable backend systems using Node.js, Express, and MongoDB, creating reliable APIs and efficient data handling.',
-    },
-    {
-        icon: "HiCodeBracketSquare",
-        title: 'Full Stack Web Development',
-        description: 'I build complete web applications by managing both frontend and backend development, from database design to user interface implementation.',
-    },
-    {
-        icon: "HiDevicePhoneMobile",
-        title: 'Responsive Web Design',
-        description: 'I design and optimize websites to work seamlessly across all devices, including mobile, tablet, and desktop screens.',
-    },
-];
-
 const Services = () => {
-    const [serviceData, setServiceData] = useState(initialServiceData);
+    const [serviceData, setServiceData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -45,8 +21,8 @@ const Services = () => {
                 const response = await fetch("http://localhost:5000/api/services");
                 if (response.ok) {
                     const result = await response.json();
-                    if (result && result.services && Array.isArray(result.services)) {
-                        setServiceData(result.services);
+                    if (Array.isArray(result)) {
+                        setServiceData(result);
                     }
                 }
             } catch (error) {
@@ -56,6 +32,26 @@ const Services = () => {
 
         fetchData();
     }, []);
+
+    if (!serviceData) {
+        return (
+            <div className="h-full bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden flex items-center justify-center">
+                {/* Background Image / Decoration */}
+                <div className='absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge translate-z-0 pointer-events-none'></div>
+                <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
+                    <ParticlesContainer />
+                </div>
+                <Circles />
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="z-10 text-accent text-2xl font-bold animate-pulse"
+                >
+                    Loading...
+                </motion.div>
+            </div>
+        );
+    }
 
     return (
         <div className="h-full bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">

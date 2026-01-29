@@ -14,83 +14,9 @@ const iconMap = {
     SiMongodb, SiExpress, SiPostman, VscCode, HiFire
 };
 
-// Initial Data
-const initialAboutData = [
-    {
-        title: 'skills',
-        heading: 'Skills & Technologies',
-        subheading: 'Technologies and tools I use to build modern, scalable, and reliable web applications.',
-        info: [
-            {
-                title: 'Frontend Development',
-                desc: 'I create clean, responsive, and interactive user interfaces with a strong focus on performance, accessibility, and user experience.',
-                icons: [
-                    { Icon: FaHtml5, name: 'HTML5' },
-                    { Icon: FaCss3, name: 'CSS3' },
-                    { Icon: FaBootstrap, name: 'Bootstrap' },
-                    { Icon: FaJs, name: 'JavaScript' },
-                    { Icon: FaReact, name: 'React.js' },
-                ],
-            },
-            {
-                title: 'Backend Development',
-                desc: 'I build secure and scalable backend systems, handling APIs, databases, and server-side logic efficiently.',
-                icons: [
-                    { Icon: FaNodeJs, name: 'Node.js' },
-                    { Icon: SiExpress, name: 'Express.js' },
-                    { Icon: SiMongodb, name: 'MongoDB' },
-                    { Icon: HiFire, name: 'RESTful APIs' },
-                ],
-            },
-            {
-                title: 'Tools & Workflow',
-                desc: 'I use modern tools and best practices to write clean code, collaborate effectively, and maintain efficient development workflows.',
-                icons: [
-                    { Icon: FaGithub, name: 'Git & GitHub' },
-                    { Icon: SiPostman, name: 'Postman' },
-                    { Icon: VscCode, name: 'VS Code' },
-                    { Icon: FaNpm, name: 'npm' },
-                ],
-            }
-        ],
-    },
-    {
-        title: 'experience',
-        heading: 'Experience & Learning Journey',
-        info: [
-            {
-                title: 'Frontend Developer (Learning & Practice)',
-                stage: '2024 – Present',
-                desc: 'Actively building real-world projects using HTML, CSS, JavaScript, and React to strengthen frontend architecture, UI/UX skills, and performance optimization.'
-            },
-            {
-                title: 'Web Developer (Project-Based)',
-                stage: '2025 – Present',
-                desc: 'Working on small to medium-scale web projects with a focus on responsive design, clean code, performance, and practical problem-solving.'
-            },
-        ],
-    },
-    {
-        title: 'credentials',
-        heading: 'Education & Training',
-        info: [
-            {
-                title: 'Bachelor of Computer Applications (BCA)',
-                stage: '2024 – 2027',
-                desc: 'Focused on computer science fundamentals, programming concepts, and application development.'
-            },
-            {
-                title: 'Full Stack Development Training',
-                stage: '2026',
-                desc: 'Hands-on training in MERN stack development with an emphasis on real-world projects and modern web practices.'
-            },
-        ],
-    },
-];
-
 const About = () => {
     const [index, setIndex] = useState(0);
-    const [aboutData, setAboutData] = useState(initialAboutData);
+    const [aboutData, setAboutData] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -122,8 +48,30 @@ const About = () => {
         fetchData();
     }, []);
 
+    if (!aboutData) {
+        return (
+            <div className="h-full min-h-screen bg-primary/30 flex items-center justify-center relative overflow-hidden">
+                {/* Background Effects */}
+                <div className="absolute top-20 left-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute inset-0 bg-circleStar bg-cover bg-center opacity-20 mix-blend-color-dodge pointer-events-none"></div>
+                <div className="absolute inset-0 opacity-40 pointer-events-none">
+                    <ParticlesContainer />
+                </div>
+                <Circles />
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="z-10 text-accent text-2xl font-bold animate-pulse"
+                >
+                    Loading...
+                </motion.div>
+            </div>
+        );
+    }
+
     // Helper to safely get the current section
-    const currentSection = aboutData[index] || aboutData[0];
+    const currentSection = aboutData[index];
 
     return (
         <div className="h-full min-h-screen bg-primary/30 text-center xl:text-left relative overflow-y-auto overflow-x-hidden pt-8 md:pt-16 xl:pt-20 pb-40 xl:pb-32">

@@ -1,4 +1,4 @@
-const Contact = require("../models/contactModel");
+const Contact = require("../models/contactmodels");
 
 // SAVE CONTACT MESSAGE
 const sendContact = async (req, res) => {

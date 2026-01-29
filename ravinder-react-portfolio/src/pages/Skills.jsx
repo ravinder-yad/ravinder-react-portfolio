@@ -13,44 +13,8 @@ const iconMap = {
     SiTailwindcss, SiMongodb, SiExpress, SiPostman, VscCode, HiFire
 };
 
-// Initial Data
-const initialSkillsData = [
-    {
-        title: 'Frontend Development',
-        desc: 'I build clean, responsive, and interactive user interfaces with a strong focus on usability, performance, and user experience.',
-        skills: [
-            { icon: "FaHtml5", name: 'HTML5', color: '#e34f26' },
-            { icon: "FaCss3", name: 'CSS3', color: '#1572b6' },
-            { icon: "FaBootstrap", name: 'Bootstrap', color: '#7952b3' },
-            { icon: "FaJs", name: 'JavaScript', color: '#f7df1e' },
-            { icon: "FaReact", name: 'React.js', color: '#61dafb' },
-            { icon: "SiTailwindcss", name: 'Tailwind CSS', color: '#06b6d4' },
-        ]
-    },
-    {
-        title: 'Backend Development',
-        desc: 'I develop secure and scalable backend systems that efficiently handle data, APIs, and server-side logic.',
-        skills: [
-            { icon: "FaNodeJs", name: 'Node.js', color: '#339933' },
-            { icon: "SiExpress", name: 'Express.js', color: '#ffffff' },
-            { icon: "SiMongodb", name: 'MongoDB', color: '#47a248' },
-            { icon: "HiFire", name: 'REST APIs', color: '#f13024' },
-        ]
-    },
-    {
-        title: 'Tools & Technologies',
-        desc: 'I work with modern development tools to improve productivity, debug applications, and maintain clean, efficient codebases.',
-        skills: [
-            { icon: "FaGithub", name: 'Git & GitHub', color: '#ffffff' },
-            { icon: "SiPostman", name: 'Postman', color: '#ff6c37' },
-            { icon: "VscCode", name: 'VS Code', color: '#007acc' },
-            { icon: "FaNpm", name: 'npm', color: '#cb3837' },
-        ]
-    }
-];
-
 const Skills = () => {
-    const [skillsData, setSkillsData] = useState(initialSkillsData);
+    const [skillsData, setSkillsData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -69,6 +33,26 @@ const Skills = () => {
 
         fetchData();
     }, []);
+
+    if (!skillsData) {
+        return (
+            <div className="h-full min-h-screen bg-primary/30 flex items-center justify-center relative overflow-hidden">
+                {/* Background Image / Decoration */}
+                <div className='absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge translate-z-0 pointer-events-none'></div>
+                <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
+                    <ParticlesContainer />
+                </div>
+                <Circles />
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="z-10 text-accent text-2xl font-bold animate-pulse"
+                >
+                    Loading...
+                </motion.div>
+            </div>
+        );
+    }
 
     return (
         <div className="h-full min-h-screen bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">

@@ -13,81 +13,8 @@ import {
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
 
-// Initial Static Data
-const initialResumeData = {
-    profile: {
-        name: 'Ravinder Kumar',
-        title: 'Full Stack Web Developer',
-        about:
-            'I am a motivated Full Stack Web Developer with a strong foundation in modern web technologies. I enjoy building clean, responsive, and scalable web applications while continuously improving my skills. I have hands-on experience with both frontend and backend development and am eager to learn, grow, and contribute to real-world projects in a collaborative environment.',
-        email: 'ravinderyadav092007@gmail.com',
-        phone: '+91 8949477114',
-        location: 'Mundawar Alwar Rajasthan',
-    },
-    experience: [
-        {
-            title: 'Frontend & Full Stack Development (Practice)',
-            company: 'Self-Directed Projects',
-            date: '2024 – Present',
-            points: [
-                'Designed and developed responsive web interfaces using HTML, CSS, Bootstrap, and Tailwind CSS.',
-                'Implemented dynamic and interactive user interfaces using JavaScript and React.js.',
-                'Built reusable React components following clean and structured component architecture.',
-                'Focused on mobile responsiveness, clean UI, and basic performance optimization.',
-            ],
-        },
-        {
-            title: 'Backend Development (Practice)',
-            company: 'Self-Directed Projects',
-            date: '2025 – Present',
-            points: [
-                'Developed backend applications using Node.js and Express.js.',
-                'Created RESTful APIs for data handling and basic authentication.',
-                'Integrated MongoDB for database operations and CRUD functionality.',
-                'Tested and validated APIs using Postman.',
-            ],
-        },
-    ],
-    education: [
-        {
-            title: 'Bachelor of Computer Applications (BCA)',
-            institution: 'Manipal University Jaipur',
-            date: '2024 – 2026',
-            desc:
-                'Pursuing undergraduate studies in Computer Applications with a focus on programming fundamentals, software development, and full stack web technologies.',
-        },
-    ],
-    skills: {
-        frontend: [
-            'HTML5',
-            'CSS3',
-            'Bootstrap',
-            'Tailwind CSS',
-            'JavaScript',
-            'React.js',
-            'Responsive Design',
-        ],
-        backend: ['Node.js', 'Express.js', 'MongoDB', 'REST APIs', 'Basic Authentication'],
-        tools: ['Git & GitHub', 'Postman', 'VS Code', 'npm', 'Canva'],
-    },
-    certifications: [
-        'Git & GitHub Fundamentals – CodeChef',
-        '500+ Problem Difficulty Rating Achievement – CodeChef',
-    ],
-    others: {
-        strengths: [
-            'Quick Learner',
-            'Problem Solving',
-            'Time Management',
-            'Team Collaboration',
-            'Consistency',
-        ],
-        languages: ['Hindi (Native)', 'English (Intermediate)'],
-    },
-};
-
 const Resume = () => {
-    const [resumeData, setResumeData] = useState(initialResumeData);
+    const [resumeData, setResumeData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -107,17 +34,40 @@ const Resume = () => {
         fetchData();
     }, []);
 
+    if (!resumeData) {
+        return (
+            <div className="h-full min-h-screen bg-primary/30 flex items-center justify-center relative overflow-hidden">
+                {/* Background Image / Decoration */}
+                <div className="absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge pointer-events-none"></div>
+                <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
+                    <ParticlesContainer />
+                </div>
+                <Circles />
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="z-10 text-accent text-2xl font-bold animate-pulse"
+                >
+                    Loading...
+                </motion.div>
+            </div>
+        );
+    }
+
     // Helper to safely render varied data types (strings vs objects)
     const renderSkill = (skill) => (typeof skill === 'string' ? skill : skill.name);
     const renderCert = (cert) => (typeof cert === 'string' ? cert : cert.name || cert);
 
     // Fallbacks to prevent crashes if nested data is missing
-    const profile = resumeData.profile || initialResumeData.profile;
+    const profile = resumeData.profile || {};
     const experience = resumeData.experience || [];
     const education = resumeData.education || [];
-    const skills = resumeData.skills || initialResumeData.skills;
-    const certifications = resumeData.certifications || initialResumeData.certifications;
-    const others = resumeData.others || initialResumeData.others;
+    // Handle skills array structure from API vs Object structure
+    const skills = Array.isArray(resumeData.skills) && resumeData.skills.length > 0
+        ? resumeData.skills[0]
+        : (resumeData.skills || {});
+    const certifications = resumeData.certifications || [];
+    const others = resumeData.others || {};
 
 
     return (

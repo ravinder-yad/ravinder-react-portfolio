@@ -1,4 +1,4 @@
-const Certificate = require("../models/contactmodels");
+const Certificate = require("../models/certificateModel");
 
 // SAVE / UPDATE CERTIFICATES (overwrite – portfolio style)
 const saveCertificates = async (req, res) => {
