@@ -19,7 +19,7 @@ const Skills = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/skills");
+                const response = await fetch("/api/skills");
                 if (response.ok) {
                     const result = await response.json();
                     if (result && result.categories && Array.isArray(result.categories)) {

@@ -19,7 +19,7 @@ const Resume = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/resume");
+                const response = await fetch("/api/resume");
                 if (response.ok) {
                     const result = await response.json();
                     if (result) {
@@ -71,7 +71,7 @@ const Resume = () => {
 
 
     return (
-        <div className="h-full min-h-screen bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
+        <div className="h-full bg-primary/30 pt-16 md:pt-24 pb-20 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
 
             {/* Background Image / Decoration */}
             <div className="absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge pointer-events-none"></div>
@@ -107,7 +107,7 @@ const Resume = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-accent text-xl xl:text-2xl font-bold tracking-[4px] uppercase mb-8"
+                        className="text-accent text-xl xl:text-2xl font-bold tracking-[4px] uppercase mb-8 text-center"
                     >
                         {profile.title}
                     </motion.p>
@@ -175,12 +175,12 @@ const Resume = () => {
                                         key={idx}
                                         initial={{ opacity: 0, y: 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}
-                                        className="bg-white/5 p-6 rounded-3xl border border-white/5 hover:border-accent/30 transition-all"
+                                        className="bg-white/10 p-6 rounded-3xl border border-white/20 hover:border-accent hover:bg-white/15 transition-all shadow-lg backdrop-blur-sm"
                                     >
                                         <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
                                             <div>
                                                 <h4 className="text-xl font-bold text-white">{item.title}</h4>
-                                                <p className="text-white/40 text-sm uppercase tracking-widest">
+                                                <p className="text-white/60 text-sm uppercase tracking-widest font-semibold">
                                                     {item.company}
                                                 </p>
                                             </div>
@@ -193,7 +193,7 @@ const Resume = () => {
                                             {item.points && item.points.map((point, pIdx) => (
                                                 <li
                                                     key={pIdx}
-                                                    className="flex items-start gap-x-3 text-white/60 text-sm leading-relaxed"
+                                                    className="flex items-start gap-x-3 text-white/80 text-sm leading-relaxed"
                                                 >
                                                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"></span>
                                                     {point}
@@ -217,16 +217,16 @@ const Resume = () => {
                                     key={idx}
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
-                                    className="bg-white/5 p-8 rounded-[32px] border border-white/5 relative"
+                                    className="bg-white/10 p-8 rounded-[32px] border border-white/20 hover:border-accent hover:bg-white/15 transition-all relative shadow-lg backdrop-blur-sm"
                                 >
-                                    <div className="absolute top-0 right-0 p-8 text-white/5 text-6xl">
+                                    <div className="absolute top-0 right-0 p-8 text-white/10 text-6xl">
                                         <HiAcademicCap />
                                     </div>
                                     <h4 className="text-xl font-bold text-white mb-1">{item.title}</h4>
                                     <p className="text-accent font-bold mb-4">
                                         {item.institution} | {item.date}
                                     </p>
-                                    <p className="text-white/60 leading-relaxed italic">{item.desc}</p>
+                                    <p className="text-white/80 leading-relaxed italic">{item.desc}</p>
                                 </motion.div>
                             ))}
                         </section>
@@ -239,8 +239,9 @@ const Resume = () => {
                         <motion.section
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            className="bg-gradient-to-br from-accent/20 to-transparent p-8 rounded-[32px] border border-accent/20 backdrop-blur-xl shadow-2xl"
+                            className="bg-white/10 p-8 rounded-[32px] border border-white/20 backdrop-blur-xl shadow-2xl relative overflow-hidden"
                         >
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-50"></div>
                             <h3 className="text-xl font-bold mb-8 text-white uppercase tracking-[2px] text-center border-b border-white/10 pb-4">
                                 Technical Skills
                             </h3>
@@ -255,7 +256,7 @@ const Resume = () => {
                                             {skills[section] && skills[section].map((s, i) => (
                                                 <span
                                                     key={i}
-                                                    className="bg-white/10 text-white text-[11px] px-3 py-1.5 rounded-lg border border-white/5"
+                                                    className="bg-white/20 text-white text-[12px] px-3 py-1.5 rounded-lg border border-white/10 font-medium hover:bg-accent hover:text-white transition-colors cursor-default"
                                                 >
                                                     {renderSkill(s)}
                                                 </span>
@@ -267,13 +268,13 @@ const Resume = () => {
                         </motion.section>
 
                         {/* Certifications */}
-                        <section className="bg-white/5 p-8 rounded-[32px] border border-white/10">
+                        <section className="bg-white/10 p-8 rounded-[32px] border border-white/20 shadow-lg backdrop-blur-sm">
                             <h3 className="text-xl font-bold mb-6 text-white uppercase tracking-[2px]">
                                 Certifications
                             </h3>
                             <ul className="space-y-4">
                                 {certifications.map((c, i) => (
-                                    <li key={i} className="flex items-center gap-x-3 text-white/60 text-sm">
+                                    <li key={i} className="flex items-center gap-x-3 text-white/80 text-sm">
                                         <HiShieldCheck className="text-accent text-lg shrink-0" />
                                         {renderCert(c)}
                                     </li>
@@ -283,7 +284,7 @@ const Resume = () => {
 
                         {/* Strengths & Languages */}
                         <div className="space-y-6">
-                            <div className="bg-white/5 p-8 rounded-[32px] border border-white/10">
+                            <div className="bg-white/10 p-8 rounded-[32px] border border-white/20 shadow-lg backdrop-blur-sm">
                                 <h3 className="text-xl font-bold mb-6 text-white uppercase tracking-[2px]">
                                     Core Strengths
                                 </h3>

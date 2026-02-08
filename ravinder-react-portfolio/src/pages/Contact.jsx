@@ -33,7 +33,7 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/contact", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,19 +54,19 @@ const Contact = () => {
   };
 
   return (
-    <div className="h-full min-h-screen bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-hidden">
+    <div className="h-full bg-primary/30 pt-20 pb-20 xl:pt-32 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-circleStar bg-cover opacity-20 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-circleStar bg-cover opacity-20 pointer-events-none fixed"></div>
       <ParticlesContainer />
       <Circles />
 
-      <div className="container mx-auto h-full flex items-center justify-center relative z-10 px-4">
-        <div className="flex flex-col w-full max-w-[1100px]">
+      <div className="container mx-auto h-auto min-h-full flex items-center justify-center relative z-10 px-4">
+        <div className="flex flex-col w-full max-w-[1100px] gap-y-12">
           {/* Heading */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-16 text-center xl:text-left"
+            className="text-center xl:text-left"
           >
             <h2 className="text-4xl md:text-6xl font-extrabold italic">
               Get In <span className="text-accent not-italic">Touch.</span>
@@ -76,77 +76,82 @@ const Contact = () => {
             </p>
           </motion.div>
 
-          <div className="flex flex-col xl:flex-row gap-14">
+          <div className="flex flex-col xl:flex-row gap-16 pb-24">
             {/* FORM */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
               className="flex-1"
             >
-              <div className="bg-white/5 p-8 rounded-[32px] border border-white/10 backdrop-blur-xl">
-                <AnimatePresence mode="wait">
-                  {!isSubmitted ? (
-                    <motion.form
-                      key="form"
-                      onSubmit={handleSubmit}
-                      className="flex flex-col gap-6"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <div className="flex flex-col md:flex-row gap-6">
-                        <input
-                          required
-                          type="text"
-                          name="yourname"
-                          value={formData.yourname}
-                          onChange={handleChange}
-                          placeholder="Your Name"
-                          className="flex-1 h-14 px-6 rounded-2xl bg-white/5 border border-white/10 text-white outline-none"
-                        />
-                        <input
-                          required
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          placeholder="Your Email"
-                          className="flex-1 h-14 px-6 rounded-2xl bg-white/5 border border-white/10 text-white outline-none"
-                        />
-                      </div>
+              <div className="bg-white/5 p-6 md:p-8 rounded-[32px] border border-white/10 backdrop-blur-xl shadow-lg relative group">
+                {/* Glow Effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-accent/20 to-purple-600/20 rounded-[32px] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
 
-                      <textarea
-                        required
-                        name="Connectwith"
-                        value={formData.Connectwith}
-                        onChange={handleChange}
-                        placeholder="Write your message here..."
-                        className="h-48 p-6 rounded-3xl bg-white/5 border border-white/10 text-white resize-none outline-none"
-                      />
-
-                      <button
-                        type="submit"
-                        className="btn bg-accent text-white rounded-full px-12 py-4 font-bold uppercase tracking-widest flex items-center gap-3 hover:bg-transparent hover:text-accent transition-all"
+                <div className="relative">
+                  <AnimatePresence mode="wait">
+                    {!isSubmitted ? (
+                      <motion.form
+                        key="form"
+                        onSubmit={handleSubmit}
+                        className="flex flex-col gap-6"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                       >
-                        Send Message
-                        <BsArrowRight className="text-2xl" />
-                      </button>
-                    </motion.form>
-                  ) : (
-                    <motion.div
-                      key="success"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="text-center py-12"
-                    >
-                      <FaCheckCircle className="text-accent text-7xl mx-auto mb-6 animate-bounce" />
-                      <h3 className="text-3xl font-bold mb-2">Message Sent!</h3>
-                      <p className="text-white/60">
-                        I’ll be in touch before your coffee gets cold ☕
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                        <div className="flex flex-col md:flex-row gap-6">
+                          <input
+                            required
+                            type="text"
+                            name="yourname"
+                            value={formData.yourname}
+                            onChange={handleChange}
+                            placeholder="Your Name"
+                            className="flex-1 h-14 px-6 rounded-2xl bg-white/20 border border-white/40 text-white placeholder-white/80 outline-none focus:border-accent focus:bg-white/30 transition-all font-medium"
+                          />
+                          <input
+                            required
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="Your Email"
+                            className="flex-1 h-14 px-6 rounded-2xl bg-white/20 border border-white/40 text-white placeholder-white/80 outline-none focus:border-accent focus:bg-white/30 transition-all font-medium"
+                          />
+                        </div>
+
+                        <textarea
+                          required
+                          name="Connectwith"
+                          value={formData.Connectwith}
+                          onChange={handleChange}
+                          placeholder="Write your message here..."
+                          className="h-48 p-6 rounded-3xl bg-white/20 border border-white/40 text-white placeholder-white/80 resize-none outline-none focus:border-accent focus:bg-white/30 transition-all font-medium"
+                        />
+
+                        <button
+                          type="submit"
+                          className="btn bg-accent text-white rounded-full px-12 py-4 font-bold uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-white hover:text-accent border border-accent hover:border-white transition-all duration-300 shadow-xl shadow-accent/20 group"
+                        >
+                          Send Message
+                          <BsArrowRight className="text-2xl group-hover:translate-x-2 transition-transform duration-300" />
+                        </button>
+                      </motion.form>
+                    ) : (
+                      <motion.div
+                        key="success"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="text-center py-12"
+                      >
+                        <FaCheckCircle className="text-accent text-7xl mx-auto mb-6 animate-bounce" />
+                        <h3 className="text-3xl font-bold mb-2">Message Sent!</h3>
+                        <p className="text-white/60">
+                          I’ll be in touch before your coffee gets cold ☕
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </motion.div>
 
@@ -172,7 +177,7 @@ const Contact = () => {
                 value="Mundawar, Alwar, Rajasthan"
               />
 
-              <div className="flex gap-4 pt-6">
+              <div className="flex justify-center xl:justify-start gap-8 pt-8">
                 <Social
                   icon={<FaGithub />}
                   link="https://github.com/ravinder-yad"
@@ -187,16 +192,19 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Spacer */}
+      <div className="h-40 xl:hidden"></div>
     </div>
   );
 };
 
 const Info = ({ icon, title, value }) => (
-  <div className="flex items-start gap-4 bg-white/5 p-5 rounded-2xl border border-white/10">
-    <div className="text-accent text-xl">{icon}</div>
+  <div className="flex items-start gap-4 bg-white/10 p-6 rounded-2xl border border-white/40 hover:bg-white/20 transition-colors duration-300">
+    <div className="text-accent text-2xl">{icon}</div>
     <div>
-      <p className="text-xs text-white/40 uppercase tracking-widest">{title}</p>
-      <p className="text-white font-semibold break-all">{value}</p>
+      <p className="text-xs text-white/60 uppercase tracking-widest font-bold mb-1">{title}</p>
+      <p className="text-white font-semibold break-all text-lg">{value}</p>
     </div>
   </div>
 );
@@ -206,7 +214,7 @@ const Social = ({ icon, link }) => (
     href={link}
     target="_blank"
     rel="noreferrer"
-    className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 text-xl hover:bg-accent hover:text-white transition-all"
+    className="w-16 h-16 flex items-center justify-center rounded-full bg-accent text-white text-3xl border-2 border-white/20 hover:bg-white hover:text-accent transition-all duration-300 shadow-xl shadow-accent/30 hover:scale-110"
   >
     {icon}
   </a>

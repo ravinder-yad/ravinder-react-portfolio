@@ -42,7 +42,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/home");
+                const response = await fetch("/api/home");
                 if (response.ok) {
                     const result = await response.json();
                     if (result && result.hero) {
@@ -66,14 +66,20 @@ const Home = () => {
     // Construct sequence for TypeAnimation dynamically with stable reference
     const typeSequence = React.useMemo(() => {
         const sequence = [];
-        if (homeData?.hero?.roles && Array.isArray(homeData.hero.roles) && homeData.hero.roles.length > 0) {
-            homeData.hero.roles.forEach(role => {
+        const roles = homeData?.hero?.roles;
+
+        if (roles && Array.isArray(roles) && roles.length > 0) {
+            roles.forEach(role => {
                 sequence.push(role);
                 sequence.push(2000);
             });
         } else {
-            // Fallback sequence to prevent crash if empty
-            sequence.push('Developer');
+            // Default Fallback sequence if data is missing or empty
+            sequence.push('Full Stack Developer');
+            sequence.push(2000);
+            sequence.push('MERN Stack Developer');
+            sequence.push(2000);
+            sequence.push('React Specialist');
             sequence.push(2000);
         }
         return sequence;

@@ -7,7 +7,7 @@ import ParticlesContainer from '../components/ParticlesContainer';
 // Icon Map
 const iconMap = {
     HiComputerDesktop,
-    HiCodeBracketSquare, 
+    HiCodeBracketSquare,
     HiDevicePhoneMobile,
     HiServer
 };
@@ -18,7 +18,7 @@ const Services = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/services");
+                const response = await fetch("/api/services");
                 if (response.ok) {
                     const result = await response.json();
                     if (Array.isArray(result)) {
@@ -54,7 +54,7 @@ const Services = () => {
     }
 
     return (
-        <div className="h-full bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
+        <div className="h-full bg-primary/30 pt-20 pb-20 xl:pt-32 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
 
 
             {/* Background Image / Decoration */}
@@ -64,7 +64,7 @@ const Services = () => {
             </div>
             <Circles />
 
-            <div className="container mx-auto px-4 relative z-10 h-full flex flex-col justify-center">
+            <div className="container mx-auto px-4 relative z-10 h-auto min-h-full flex flex-col justify-center">
                 <div className="flex flex-col xl:flex-row gap-x-8 items-center">
                     {/* text */}
                     <div className="text-center lg:text-left xl:w-[30vw] flex flex-col mb-12 xl:mb-0 justify-center items-center lg:items-start">
@@ -98,7 +98,7 @@ const Services = () => {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.6, delay: index * 0.1 }}
                                         key={index}
-                                        className="bg-[rgba(65,47,123,0.15)] rounded-lg p-6 group cursor-pointer hover:bg-[rgba(89,65,169,0.3)] transition-all duration-300 border border-white/5 hover:border-accent/50 relative overflow-hidden"
+                                        className="bg-white/10 rounded-2xl p-6 group cursor-pointer hover:bg-white/20 transition-all duration-300 border border-white/20 hover:border-accent relative overflow-hidden backdrop-blur-sm shadow-lg"
                                     >
                                         <div className="flex justify-between items-start mb-4 relative z-10">
                                             <div className="text-4xl text-accent transition-all duration-300 group-hover:scale-110 group-hover:text-white">
@@ -127,6 +127,9 @@ const Services = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Mobile Spacer */}
+            <div className="h-40 xl:hidden"></div>
         </div>
     );
 };
