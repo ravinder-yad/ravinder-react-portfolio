@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import Circles from '../components/Circles';
-import ParticlesContainer from '../components/ParticlesContainer';
 import { aboutData } from '../data';
 
 const About = () => {
@@ -17,15 +15,7 @@ const About = () => {
         <div className="h-full bg-primary/30 text-center xl:text-left relative overflow-y-auto overflow-x-hidden pt-20 pb-20 xl:pt-20 xl:pb-32">
 
 
-            {/* Background Effects */}
-            <div className="absolute top-20 left-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-            <div className="absolute inset-0 bg-circleStar bg-cover bg-center opacity-20 mix-blend-color-dodge pointer-events-none"></div>
-            <div className="absolute inset-0 opacity-40 pointer-events-none">
-                <ParticlesContainer />
-            </div>
-            <Circles />
+            {/* Content Container */}
 
             <div className="container mx-auto h-auto min-h-full flex flex-col xl:flex-row gap-x-6 xl:gap-x-12 relative z-10 xl:items-center px-4 md:px-10 lg:px-20 xl:px-0 pb-0 xl:pb-0">
 

@@ -1,22 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { HiAcademicCap, HiMagnifyingGlassCircle } from 'react-icons/hi2';
-import Circles from '../components/Circles';
-import ParticlesContainer from '../components/ParticlesContainer';
 import { certificatesData } from '../data';
 
 const Certificates = () => {
-
-
     return (
         <div className="h-full min-h-screen bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
-
-            {/* Background Image / Decoration */}
-            <div className='absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge translate-z-0 pointer-events-none'></div>
-            <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-                <ParticlesContainer />
-            </div>
-            <Circles />
 
             <div className="container mx-auto px-4 relative z-10">
 

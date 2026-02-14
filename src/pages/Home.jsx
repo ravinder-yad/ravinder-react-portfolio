@@ -2,9 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { useNavigate } from 'react-router-dom';
-import ParticlesContainer from '../components/ParticlesContainer';
 import Header from '../components/Header';
-import Circles from '../components/Circles';
 import { homeData } from '../data';
 
 const Home = () => {
@@ -36,16 +34,8 @@ const Home = () => {
     return (
         <div className="bg-primary/20 h-full relative overflow-hidden">
             <Header />
-            {/* Particles */}
-            <div className="w-full h-full absolute right-0 bottom-0 z-0">
-                <ParticlesContainer />
-            </div>
 
-            {/* Background Image */}
-            <div className="absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge pointer-events-none"></div>
-            <Circles />
-
-            {/* Glow Effects */}
+            {/* Content */}
             <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/20 rounded-full blur-[120px] opacity-40 pointer-events-none"></div>
             <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent/10 rounded-full blur-[120px] opacity-30 pointer-events-none"></div>
 

@@ -10,35 +10,22 @@ import {
     HiCommandLine,
     HiShieldCheck
 } from 'react-icons/hi2';
-import Circles from '../components/Circles';
-import ParticlesContainer from '../components/ParticlesContainer';
 import { resumeData } from '../data';
 
 const Resume = () => {
-    // Helper to safely render varied data types (strings vs objects)
+    // ... data helpers ...
     const renderSkill = (skill) => (typeof skill === 'string' ? skill : skill.name);
     const renderCert = (cert) => (typeof cert === 'string' ? cert : cert.name || cert);
 
-    // Fallbacks to prevent crashes if nested data is missing
     const profile = resumeData.profile || {};
     const experience = resumeData.experience || [];
     const education = resumeData.education || [];
-    // Handle skills array structure from data file
     const skills = resumeData.skills || {};
     const certifications = resumeData.certifications || [];
     const others = resumeData.others || {};
 
-
-
     return (
         <div className="h-full bg-primary/30 pt-16 md:pt-24 pb-20 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
-
-            {/* Background Image / Decoration */}
-            <div className="absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge pointer-events-none"></div>
-            <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-                <ParticlesContainer />
-            </div>
-            <Circles />
 
             {/* Background Glows */}
             <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[150px] pointer-events-none"></div>

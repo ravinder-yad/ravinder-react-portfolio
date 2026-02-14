@@ -11,9 +11,6 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 
-import Circles from "../components/Circles";
-import ParticlesContainer from "../components/ParticlesContainer";
-
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -39,10 +36,6 @@ const Contact = () => {
 
   return (
     <div className="h-full bg-primary/30 pt-20 pb-20 xl:pt-32 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-circleStar bg-cover opacity-20 pointer-events-none fixed"></div>
-      <ParticlesContainer />
-      <Circles />
 
       <div className="container mx-auto h-auto min-h-full flex items-center justify-center relative z-10 px-4">
         <div className="flex flex-col w-full max-w-[1100px] gap-y-12">
