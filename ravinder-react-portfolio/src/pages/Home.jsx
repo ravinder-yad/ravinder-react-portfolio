@@ -1,67 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import ParticlesContainer from '../components/ParticlesContainer';
-import Header from '../components/Header';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { useNavigate } from 'react-router-dom';
+import ParticlesContainer from '../components/ParticlesContainer';
+import Header from '../components/Header';
 import Circles from '../components/Circles';
+import { homeData } from '../data';
 
 const Home = () => {
     const navigate = useNavigate();
 
-    // Default static data (fallback)
-    const [homeData, setHomeData] = useState({
-        hero: {
-            greeting: "Hi, I’m",
-            name: "Ravinder Kumar",
-            subtitlePrefix: "I’m a",
-            roles: [
-                "Full Stack Web Developer",
-                "MERN Stack Developer",
-                "React.js Specialist",
-                "Creative Problem Solver"
-            ],
-            description: "I transform complex ideas into clean, scalable, and user-friendly digital experiences using modern technologies. My focus is on building high-performance web applications using modern technologies, with strong attention to detail and a passion for continuous learning."
-        },
-        buttons: {
-            primary: {
-                text: "View My Projects",
-                route: "/projects"
-            },
-            secondary: {
-                text: "Get in Touch",
-                route: "/contact"
-            }
-        },
-        image: {
-            src: "/avatar.png",
-            alt: "Ravinder Kumar – Full Stack Web Developer"
-        }
-    });
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("/api/home");
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result && result.hero) {
-                        setHomeData(prevData => ({
-                            ...prevData,
-                            ...result,
-                            hero: { ...prevData.hero, ...result.hero },
-                            buttons: result.buttons ? { ...prevData.buttons, ...result.buttons } : prevData.buttons,
-                            image: result.image ? { ...prevData.image, ...result.image } : prevData.image
-                        }));
-                    }
-                }
-            } catch (error) {
-                console.error("Failed to fetch home data:", error);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     // Construct sequence for TypeAnimation dynamically with stable reference
     const typeSequence = React.useMemo(() => {

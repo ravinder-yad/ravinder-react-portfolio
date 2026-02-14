@@ -1,50 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-
 import { HiAcademicCap, HiMagnifyingGlassCircle } from 'react-icons/hi2';
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
+import { certificatesData } from '../data';
 
 const Certificates = () => {
-    const [certificatesData, setCertificatesData] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("/api/certificates");
-                if (response.ok) {
-                    const result = await response.json();
-                    if (Array.isArray(result)) {
-                        setCertificatesData(result);
-                    }
-                }
-            } catch (error) {
-                console.error("Failed to fetch certificates:", error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    if (!certificatesData) {
-        return (
-            <div className="h-full min-h-screen bg-primary/30 flex items-center justify-center relative overflow-hidden">
-                {/* Background Image / Decoration */}
-                <div className='absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge translate-z-0 pointer-events-none'></div>
-                <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-                    <ParticlesContainer />
-                </div>
-                <Circles />
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="z-10 text-accent text-2xl font-bold animate-pulse"
-                >
-                    Loading...
-                </motion.div>
-            </div>
-        );
-    }
 
     return (
         <div className="h-full min-h-screen bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">

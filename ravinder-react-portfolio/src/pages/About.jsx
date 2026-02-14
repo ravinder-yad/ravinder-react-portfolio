@@ -1,74 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaBootstrap, FaGithub, FaNpm } from 'react-icons/fa';
-import { SiMongodb, SiExpress, SiPostman } from 'react-icons/si';
-import { VscCode } from 'react-icons/vsc';
-import { HiFire } from 'react-icons/hi2';
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
-
-// Icon Mapping
-const iconMap = {
-    FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaBootstrap, FaGithub, FaNpm,
-    SiMongodb, SiExpress, SiPostman, VscCode, HiFire
-};
+import { aboutData } from '../data';
 
 const About = () => {
     const [index, setIndex] = useState(0);
-    const [aboutData, setAboutData] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("/api/about");
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result && result.sections && Array.isArray(result.sections)) {
-                        // Transform the fetched data to map icon strings to components
-                        const transformedData = result.sections.map(section => ({
-                            ...section,
-                            info: section.info.map(item => ({
-                                ...item,
-                                icons: item.icons ? item.icons.map(iconObj => ({
-                                    ...iconObj,
-                                    Icon: iconMap[iconObj.icon] || FaHtml5 // Fallback to HTML5 icon if not found
-                                })) : undefined
-                            }))
-                        }));
-                        setAboutData(transformedData);
-                    }
-                }
-            } catch (error) {
-                console.error("Failed to fetch about data:", error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    if (!aboutData) {
-        return (
-            <div className="h-full min-h-screen bg-primary/30 flex items-center justify-center relative overflow-hidden">
-                {/* Background Effects */}
-                <div className="absolute top-20 left-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[120px] pointer-events-none"></div>
-                <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[120px] pointer-events-none"></div>
-                <div className="absolute inset-0 bg-circleStar bg-cover bg-center opacity-20 mix-blend-color-dodge pointer-events-none"></div>
-                <div className="absolute inset-0 opacity-40 pointer-events-none">
-                    <ParticlesContainer />
-                </div>
-                <Circles />
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="z-10 text-accent text-2xl font-bold animate-pulse"
-                >
-                    Loading...
-                </motion.div>
-            </div>
-        );
-    }
 
     // Helper to safely get the current section
     const currentSection = aboutData[index];

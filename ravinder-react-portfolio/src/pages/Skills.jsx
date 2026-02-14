@@ -1,70 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaBootstrap, FaGithub, FaNpm } from 'react-icons/fa';
-import { SiTailwindcss, SiMongodb, SiExpress, SiPostman } from 'react-icons/si';
-import { VscCode } from 'react-icons/vsc';
-import { HiFire } from 'react-icons/hi2';
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
-
-// Icon Mapping
-const iconMap = {
-    FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaBootstrap, FaGithub, FaNpm,
-    SiTailwindcss, SiMongodb, SiExpress, SiPostman, VscCode, HiFire
-};
+import { skillsData } from '../data';
 
 const Skills = () => {
-    const [skillsData, setSkillsData] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("/api/skills");
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result && result.categories && Array.isArray(result.categories)) {
-                        setSkillsData(result.categories);
-                    }
-                }
-            } catch (error) {
-                console.error("Failed to fetch skills data:", error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    if (!skillsData) {
-        return (
-            <div className="h-full min-h-screen bg-primary/30 flex items-center justify-center relative overflow-hidden">
-                {/* Background Image / Decoration */}
-                <div className='absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge translate-z-0 pointer-events-none'></div>
-                <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-                    <ParticlesContainer />
-                </div>
-                <Circles />
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="z-10 text-accent text-2xl font-bold animate-pulse"
-                >
-                    Loading...
-                </motion.div>
-            </div>
-        );
-    }
-
     return (
         <div className="h-full min-h-screen bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
-
-            {/* Background Image / Decoration */}
+            {/* ... Background ... */}
             <div className='absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge translate-z-0 pointer-events-none'></div>
             <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
                 <ParticlesContainer />
             </div>
             <Circles />
 
-            {/* Background Glows */}
             <div className='absolute top-40 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[150px] pointer-events-none'></div>
 
             <div className="container mx-auto px-4 relative z-10">
@@ -106,7 +55,7 @@ const Skills = () => {
 
                             <div className="grid grid-cols-3 gap-6 w-full">
                                 {category.skills.map((skill, sIdx) => {
-                                    const IconComponent = iconMap[skill.icon] || FaHtml5;
+                                    const IconComponent = skill.Icon;
                                     return (
                                         <div key={sIdx} className="flex flex-col items-center gap-y-2 group/skill">
                                             <div

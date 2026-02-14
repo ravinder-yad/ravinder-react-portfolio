@@ -29,28 +29,12 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const result = await response.json();
-      console.log(result);
-
-      setIsSubmitted(true);
-      setFormData({ yourname: "", email: "", Connectwith: "" });
-
-      setTimeout(() => setIsSubmitted(false), 5000);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    // Static local success (No backend needed for Vercel demo)
+    setIsSubmitted(true);
+    setFormData({ yourname: "", email: "", Connectwith: "" });
+    setTimeout(() => setIsSubmitted(false), 5000);
   };
 
   return (
@@ -200,11 +184,11 @@ const Contact = () => {
 };
 
 const Info = ({ icon, title, value }) => (
-  <div className="flex items-start gap-4 bg-white/10 p-6 rounded-2xl border border-white/40 hover:bg-white/20 transition-colors duration-300">
-    <div className="text-accent text-2xl">{icon}</div>
+  <div className="flex items-start gap-4 bg-white/10 p-4 md:p-6 rounded-2xl border border-white/40 hover:bg-white/20 transition-colors duration-300">
+    <div className="text-accent text-xl md:text-2xl xl:text-lg">{icon}</div>
     <div>
-      <p className="text-xs text-white/60 uppercase tracking-widest font-bold mb-1">{title}</p>
-      <p className="text-white font-semibold break-all text-lg">{value}</p>
+      <p className="text-[10px] md:text-xs text-white/60 uppercase tracking-widest font-bold mb-1">{title}</p>
+      <p className="text-white font-semibold break-all text-base md:text-lg xl:text-base">{value}</p>
     </div>
   </div>
 );
@@ -214,7 +198,7 @@ const Social = ({ icon, link }) => (
     href={link}
     target="_blank"
     rel="noreferrer"
-    className="w-16 h-16 flex items-center justify-center rounded-full bg-accent text-white text-3xl border-2 border-white/20 hover:bg-white hover:text-accent transition-all duration-300 shadow-xl shadow-accent/30 hover:scale-110"
+    className="w-14 h-14 md:w-16 md:h-16 xl:w-12 xl:h-12 flex items-center justify-center rounded-full bg-accent text-white text-xl md:text-3xl xl:text-xl border-2 border-white/20 hover:bg-white hover:text-accent transition-all duration-300 shadow-xl shadow-accent/30 hover:scale-110"
   >
     {icon}
   </a>

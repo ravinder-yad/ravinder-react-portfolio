@@ -1,57 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { HiComputerDesktop, HiCodeBracketSquare, HiDevicePhoneMobile, HiServer } from "react-icons/hi2";
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
-
-// Icon Map
-const iconMap = {
-    HiComputerDesktop,
-    HiCodeBracketSquare,
-    HiDevicePhoneMobile,
-    HiServer
-};
+import { servicesData as serviceData } from '../data';
 
 const Services = () => {
-    const [serviceData, setServiceData] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("/api/services");
-                if (response.ok) {
-                    const result = await response.json();
-                    if (Array.isArray(result)) {
-                        setServiceData(result);
-                    }
-                }
-            } catch (error) {
-                console.error("Failed to fetch services data:", error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    if (!serviceData) {
-        return (
-            <div className="h-full bg-primary/30 pt-16 md:pt-24 pb-40 xl:pb-32 relative overflow-y-auto overflow-x-hidden flex items-center justify-center">
-                {/* Background Image / Decoration */}
-                <div className='absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge translate-z-0 pointer-events-none'></div>
-                <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-                    <ParticlesContainer />
-                </div>
-                <Circles />
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="z-10 text-accent text-2xl font-bold animate-pulse"
-                >
-                    Loading...
-                </motion.div>
-            </div>
-        );
-    }
 
     return (
         <div className="h-full bg-primary/30 pt-20 pb-20 xl:pt-32 xl:pb-32 relative overflow-y-auto overflow-x-hidden">
@@ -90,7 +44,7 @@ const Services = () => {
                     <div className="w-full lg:max-w-[90%] xl:max-w-[65%]">
                         <div className="grid md:grid-cols-2 gap-6">
                             {serviceData.map((item, index) => {
-                                const IconComponent = iconMap[item.icon] || HiComputerDesktop;
+                                const IconComponent = item.icon;
 
                                 return (
                                     <motion.div

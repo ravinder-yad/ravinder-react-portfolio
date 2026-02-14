@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import {
     HiArrowDownTray,
@@ -12,48 +12,9 @@ import {
 } from 'react-icons/hi2';
 import Circles from '../components/Circles';
 import ParticlesContainer from '../components/ParticlesContainer';
+import { resumeData } from '../data';
 
 const Resume = () => {
-    const [resumeData, setResumeData] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("/api/resume");
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result) {
-                        setResumeData(result);
-                    }
-                }
-            } catch (error) {
-                console.error("Failed to fetch resume data:", error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    if (!resumeData) {
-        return (
-            <div className="h-full min-h-screen bg-primary/30 flex items-center justify-center relative overflow-hidden">
-                {/* Background Image / Decoration */}
-                <div className="absolute top-0 right-0 bottom-0 left-0 bg-circleStar bg-cover bg-no-repeat bg-center z-0 opacity-20 mix-blend-color-dodge pointer-events-none"></div>
-                <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-                    <ParticlesContainer />
-                </div>
-                <Circles />
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="z-10 text-accent text-2xl font-bold animate-pulse"
-                >
-                    Loading...
-                </motion.div>
-            </div>
-        );
-    }
-
     // Helper to safely render varied data types (strings vs objects)
     const renderSkill = (skill) => (typeof skill === 'string' ? skill : skill.name);
     const renderCert = (cert) => (typeof cert === 'string' ? cert : cert.name || cert);
@@ -62,12 +23,11 @@ const Resume = () => {
     const profile = resumeData.profile || {};
     const experience = resumeData.experience || [];
     const education = resumeData.education || [];
-    // Handle skills array structure from API vs Object structure
-    const skills = Array.isArray(resumeData.skills) && resumeData.skills.length > 0
-        ? resumeData.skills[0]
-        : (resumeData.skills || {});
+    // Handle skills array structure from data file
+    const skills = resumeData.skills || {};
     const certifications = resumeData.certifications || [];
     const others = resumeData.others || {};
+
 
 
     return (
