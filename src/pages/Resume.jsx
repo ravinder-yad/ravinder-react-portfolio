@@ -78,8 +78,8 @@ const Resume = () => {
 
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
                         <a
-                            href={profile.resumeFile || "/resume.png"}
-                            download="Ravinder_Kumar_Resume.png"
+                            href="/Full%20stack%20developer%20resume.pdf"
+                            download="Ravinder_Kumar_Resume.pdf"
                             className="btn rounded-full bg-accent border border-accent hover:bg-transparent hover:text-accent font-bold uppercase tracking-[2px] py-3.5 px-10 transition-all duration-500 shadow-xl shadow-accent/10 flex items-center gap-x-3 group"
                         >
                             Download CV
@@ -194,7 +194,7 @@ const Resume = () => {
                             </h3>
 
                             <div className="space-y-8">
-                                {['frontend', 'backend', 'tools'].map((section) => (
+                                {['frontend', 'backend', 'database', 'tools'].map((section) => (
                                     <div key={section}>
                                         <p className="text-accent text-xs font-bold uppercase mb-4 tracking-widest flex items-center gap-2">
                                             <HiCommandLine /> {section}

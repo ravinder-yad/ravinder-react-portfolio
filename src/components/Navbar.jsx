@@ -8,6 +8,7 @@ import {
     HiDocumentText,
     HiComputerDesktop,
     HiAcademicCap,
+    HiArrowDownTray,
 } from 'react-icons/hi2';
 
 export const navData = [
@@ -18,6 +19,7 @@ export const navData = [
     { name: 'resume', path: '/resume', icon: HiDocumentText },
     { name: 'projects', path: '/projects', icon: HiViewColumns },
     { name: 'certificates', path: '/certificates', icon: HiAcademicCap },
+    { name: 'download cv', path: '/Full%20stack%20developer%20resume.pdf', icon: HiArrowDownTray, isDownload: true },
     { name: 'contact', path: '/contact', icon: HiEnvelope },
 ];
 
@@ -47,7 +49,17 @@ const Navbar = () => {
 
                         {/* Icon */}
                         <div>
-                            <link.icon aria-hidden="true" />
+                            {link.isDownload ? (
+                                <a
+                                    href={link.path}
+                                    download="Ravinder_Kumar_Resume.pdf"
+                                    className="hover:text-accent transition-all duration-300"
+                                >
+                                    <link.icon aria-hidden="true" />
+                                </a>
+                            ) : (
+                                <link.icon aria-hidden="true" />
+                            )}
                         </div>
                     </NavLink>
                 ))}

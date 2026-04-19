@@ -4,7 +4,7 @@ import {
 } from 'react-icons/fa';
 import { SiMongodb, SiExpress, SiPostman, SiTailwindcss } from 'react-icons/si';
 import { VscCode } from 'react-icons/vsc';
-import { HiFire, HiComputerDesktop, HiServer, HiCodeBracketSquare, HiDevicePhoneMobile } from 'react-icons/hi2';
+import { HiFire, HiComputerDesktop, HiServer, HiCodeBracketSquare, HiDevicePhoneMobile, HiBriefcase } from 'react-icons/hi2';
 
 export const homeData = {
     hero: {
@@ -17,7 +17,7 @@ export const homeData = {
             "React.js Specialist",
             "Creative Problem Solver"
         ],
-        description: "I transform complex ideas into clean, scalable, and user-friendly digital experiences using modern technologies. My focus is on building high-performance web applications using modern technologies, with strong attention to detail and a passion for continuous learning."
+        description: "Passionate Full Stack Developer (MERN Stack) with hands-on experience in building scalable Web Applications using React.js, Node.js, Express.js, and MongoDB. Skilled in frontend and backend development with a focus on performance, clean code, and user-friendly design."
     },
     buttons: {
         primary: {
@@ -30,7 +30,7 @@ export const homeData = {
         }
     },
     image: {
-        src: "/avatar.png",
+        src: "/avatar_final.png",
         alt: "Ravinder Kumar – Full Stack Web Developer"
     }
 };
@@ -53,12 +53,13 @@ export const aboutData = [
                 ]
             },
             {
-                title: "Backend Development",
-                desc: "I build secure and scalable backend systems.",
+                title: "Backend & Database",
+                desc: "I build secure, scalable backend systems and manage efficient databases.",
                 icons: [
                     { name: "Node.js", icon: "FaNodeJs", Icon: FaNodeJs },
                     { name: "Express.js", icon: "SiExpress", Icon: SiExpress },
-                    { name: "MongoDB", icon: "SiMongodb", Icon: SiMongodb }
+                    { name: "MongoDB", icon: "SiMongodb", Icon: SiMongodb },
+                    { name: "REST APIs", icon: "HiFire", Icon: HiFire }
                 ]
             }
         ]
@@ -149,12 +150,21 @@ export const projectsData = [
     },
     {
         title: "TIPS-G Alwar",
-        description: "Developed a responsive educational institute website with clean UI and performance optimization.",
-        tech: ["HTML", "CSS", "JavaScript", "React"],
-        link: "https://tips-g-alwar-frontend-n3wn.vercel.app/",
+        description: "Educational institute website with full-stack backend integration and RESTful APIs for dynamic content management.",
+        tech: ["React.js", "Node.js", "Express.js", "MongoDB"],
+        link: "https://tips-g-alwar.vercel.app/",
         github: "#",
         image: "https://picsum.photos/seed/education/800/600",
         category: "Education"
+    },
+    {
+        title: "RK Gym",
+        description: "A comprehensive fitness and gym management platform featuring a modern UI, workout tracking, and responsive design.",
+        tech: ["React.js", "Tailwind CSS", "Framer Motion"],
+        link: "https://rk-gym-one.vercel.app/",
+        github: "#",
+        image: "https://picsum.photos/seed/gym/800/600",
+        category: "Fitness"
     }
 ];
 
@@ -162,47 +172,46 @@ export const resumeData = {
     profile: {
         name: "Ravinder Kumar",
         email: "ravinderyadav092007@gmail.com",
-        phone: "+91 8949477114",
-        title: "Full Stack Web Developer",
-        about: "I am a motivated Full Stack Web Developer with a strong foundation in modern web technologies...",
-        location: "Mundawar, Alwar, Rajasthan",
-        resumeFile: "/resume.png",
-        socials: []
+        phone: "+91 89494 77114",
+        title: "Full Stack Developer",
+        about: "Passionate Full Stack Developer (MERN Stack) with hands-on experience in Full Stack Development and building scalable Web Applications using React.js, Node.js, Express.js, and MongoDB. Skilled in frontend and backend development with a focus on performance, clean code, and user-friendly design.",
+        location: "Mundawar, Alwar (Raj.)",
+        resumeFile: "/Full stack developer resume.pdf",
+        socials: [
+            { name: "GitHub", link: "https://github.com/ravinder-yad" },
+            { name: "Portfolio", link: "#" },
+            { name: "LinkedIn", link: "#" }
+        ]
     },
     experience: [
         {
-            title: "Frontend & Full Stack Development (Practice)",
-            company: "Self-Directed Projects",
+            title: "Full Stack & Frontend Web Development Projects",
+            company: "MERN Stack Specialist",
             date: "2024 – Present",
             points: [
-                "Designed responsive interfaces using HTML, CSS, Bootstrap, Tailwind",
-                "Built reusable React components",
-                "Focused on clean UI and performance"
-            ]
-        },
-        {
-            title: "Backend Development (Practice)",
-            company: "Self-Directed Projects",
-            date: "2025 – Present",
-            points: [
-                "Developed APIs using Node.js and Express",
-                "Integrated MongoDB for CRUD operations",
-                "Tested APIs using Postman"
+                "Developed multiple responsive web applications using React.js, Node.js, and MongoDB",
+                "Built Tips-G Alwar Business Website with full-stack backend integration and RESTful APIs",
+                "Designed Mokshika Water Purifier Website with modern UI and responsive product showcase",
+                "Created CineCharge Movie Booking Website with dynamic content handling and API integration",
+                "Developed Foodorax Food Ordering Platform and E-Commerce Web Application with product listing, cart functionality, and user authentication",
+                "Built frontend projects such as Rapido App Clone and YouTube Clone using HTML, CSS, Bootstrap, and JavaScript",
+                "Focused on reusable components, clean UI, and mobile-friendly responsive design across all projects"
             ]
         }
     ],
     education: [
         {
             institution: "Manipal University Jaipur",
-            date: "2024 – 2026",
+            date: "2024 – 2027",
             title: "Bachelor of Computer Applications (BCA)",
-            desc: "Focused on programming fundamentals and full stack development"
+            desc: "Focused on programming fundamentals, Full Stack Development, and building scalable applications."
         }
     ],
     skills: {
-        frontend: ["HTML5", "CSS3", "Bootstrap", "Tailwind CSS", "JavaScript", "React.js"],
-        backend: ["Node.js", "Express.js", "MongoDB", "REST APIs"],
-        tools: ["Git & GitHub", "Postman", "VS Code", "npm", "Canva"]
+        frontend: ["HTML5", "CSS3", "Bootstrap", "Tailwind CSS", "JavaScript (ES6+)", "React.js"],
+        backend: ["Node.js", "Express.js", "RESTful APIs", "JWT Authentication", "API Integration"],
+        database: ["MongoDB", "SQL (Basic)"],
+        tools: ["Git & GitHub", "Postman", "VS Code", "Notion"]
     },
     certifications: [
         "Git & GitHub Fundamentals – CodeChef",
@@ -245,9 +254,9 @@ export const skillsData = [
             { name: "HTML5", Icon: FaHtml5, color: "#e34f26" },
             { name: "CSS3", Icon: FaCss3, color: "#1572b6" },
             { name: "Bootstrap", Icon: FaBootstrap, color: "#7952b3" },
-            { name: "JavaScript", Icon: FaJs, color: "#f7df1e" },
-            { name: "React.js", Icon: FaReact, color: "#61dafb" },
-            { name: "Tailwind CSS", Icon: SiTailwindcss, color: "#06b6d4" }
+            { name: "Tailwind CSS", Icon: SiTailwindcss, color: "#06b6d4" },
+            { name: "JavaScript (ES6+)", Icon: FaJs, color: "#f7df1e" },
+            { name: "React.js", Icon: FaReact, color: "#61dafb" }
         ]
     },
     {
@@ -256,8 +265,16 @@ export const skillsData = [
         skills: [
             { name: "Node.js", Icon: FaNodeJs, color: "#339933" },
             { name: "Express.js", Icon: SiExpress, color: "#ffffff" },
+            { name: "RESTful APIs", Icon: HiFire, color: "#f13024" },
+            { name: "JWT Auth", Icon: HiFire, color: "#f13024" }
+        ]
+    },
+    {
+        title: "Database Development",
+        desc: "I manage and optimize databases for high-performance and data integrity.",
+        skills: [
             { name: "MongoDB", Icon: SiMongodb, color: "#47a248" },
-            { name: "REST APIs", Icon: HiFire, color: "#f13024" }
+            { name: "SQL (Basic)", Icon: HiServer, color: "#1572b6" }
         ]
     },
     {
@@ -267,7 +284,7 @@ export const skillsData = [
             { name: "Git & GitHub", Icon: FaGithub, color: "#ffffff" },
             { name: "Postman", Icon: SiPostman, color: "#ff6c37" },
             { name: "VS Code", Icon: VscCode, color: "#007acc" },
-            { name: "npm", Icon: FaNpm, color: "#cb3837" }
+            { name: "Notion", Icon: HiBriefcase, color: "#ffffff" }
         ]
     }
 ];

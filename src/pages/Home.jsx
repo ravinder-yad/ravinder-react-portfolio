@@ -108,6 +108,14 @@ const Home = () => {
                                 >
                                     {homeData?.buttons?.secondary?.text || 'Get in Touch'}
                                 </button>
+
+                                <a
+                                    href="/Full%20stack%20developer%20resume.pdf"
+                                    download="Ravinder_Kumar_Resume.pdf"
+                                    className="btn bg-white/5 border border-white/20 rounded-full py-4 px-8 text-xs font-bold uppercase tracking-[2px] hover:bg-accent hover:border-accent transition-all duration-300 shadow-xl flex items-center gap-x-2"
+                                >
+                                    Download CV
+                                </a>
                             </motion.div>
                         </div>
 
@@ -128,7 +136,7 @@ const Home = () => {
                                     <img
                                         src={homeData?.image?.src || '/avatar.png'}
                                         alt={homeData?.image?.alt || 'Profile'}
-                                        className="w-full h-full object-cover scale-110 translate-y-8 grayscale hover:grayscale-0 transition-all duration-700"
+                                        className="w-full h-full object-contain p-2 transition-all duration-1000 grayscale-0 hover:scale-110"
                                     />
                                 </div>
                             </div>
