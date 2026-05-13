@@ -134,7 +134,7 @@ const Home = () => {
 
                                 <div className="relative bg-black/40 border border-white/10 p-2 rounded-full overflow-hidden w-[500px] h-[500px] flex items-center justify-center backdrop-blur-xl">
                                     <img
-                                        src={homeData?.image?.src || '/avatar.png'}
+                                        // src={homeData?.image?.src || '/avatar.png'}
                                         alt={homeData?.image?.alt || 'Profile'}
                                         className="w-full h-full object-contain p-2 transition-all duration-1000 grayscale-0 hover:scale-110"
                                     />
